@@ -1,0 +1,27 @@
+{
+  "name": "assignment-web-application-with-rpa-dhl-dac-3-0-jwen0518",
+  "version": "1.0.0",
+  "description": "[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/AdXPQXWO)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UTM-FC/assignment-web-application-with-rpa-dhl-dac-3-0-JWEN0518.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UTM-FC/assignment-web-application-with-rpa-dhl-dac-3-0-JWEN0518/issues"
+  },
+  "homepage": "https://github.com/UTM-FC/assignment-web-application-with-rpa-dhl-dac-3-0-JWEN0518#readme",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.5.0",
+    "multer": "^2.1.1"
+  }
+}
