@@ -1,0 +1,616 @@
+/* ================================
+   Global Reset
+================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+/* ================================
+   Main Page Layout After Login
+================================ */
+
+.page {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 28px 48px;
+}
+
+main {
+  width: 100%;
+}
+
+.topbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.topbar h1 {
+  margin: 0 0 6px;
+  color: #0f172a;
+}
+
+.topbar p,
+.hint,
+.meta,
+.empty {
+  color: #6b7280;
+}
+
+.route-nav {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.route-nav a {
+  padding: 9px 14px;
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.route-nav a.router-link-active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* ================================
+   User Box and Card
+================================ */
+
+.user-box,
+.card {
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-box {
+  padding: 14px;
+  min-width: 250px;
+}
+
+.user-box p {
+  margin: 4px 0;
+}
+
+.card {
+  width: 100%;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+/* ================================
+   Professional DHL Login UI
+================================ */
+
+.auth-shell {
+  width: 100%;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(255, 204, 0, 0.28), transparent 32%),
+    linear-gradient(135deg, #f8fafc 0%, #f3f4f6 45%, #ffffff 100%);
+}
+
+.login-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-layout {
+  width: 100%;
+  max-width: 1050px;
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  background: #ffffff;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.16);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.login-info-panel {
+  position: relative;
+  padding: 56px;
+  background:
+    linear-gradient(135deg, rgba(255, 204, 0, 0.96), rgba(255, 225, 78, 0.92)),
+    linear-gradient(135deg, #ffcc00, #ffe066);
+  color: #111827;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.login-info-panel::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  bottom: -80px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: rgba(212, 5, 17, 0.12);
+}
+
+.brand-badge {
+  width: fit-content;
+  padding: 8px 14px;
+  margin-bottom: 24px;
+  border-radius: 999px;
+  background: #d40511;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+}
+
+.login-info-panel h1 {
+  margin: 0 0 16px;
+  font-size: 38px;
+  line-height: 1.15;
+  color: #111827;
+}
+
+.login-info-panel > p {
+  max-width: 480px;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #374151;
+}
+
+.login-feature-list {
+  margin-top: 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.feature-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.feature-item span {
+  min-width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #d40511;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.feature-item p {
+  margin: 0;
+  color: #1f2937;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 56px 48px;
+  border-radius: 0;
+  box-shadow: none;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-card-header {
+  margin-bottom: 28px;
+}
+
+.login-card-header h2 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  color: #0f172a;
+}
+
+.login-card-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 15px;
+}
+
+/* ================================
+   Forms
+================================ */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: minmax(240px, 2fr) repeat(5, minmax(150px, 1fr)) auto auto;
+  gap: 14px;
+  align-items: center;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label,
+.input-group label {
+  margin-top: 8px;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.input-group label {
+  margin: 0;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.input-group input {
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  transition: 0.2s ease;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #ffcc00;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.22);
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* ================================
+   Buttons
+================================ */
+
+button {
+  width: fit-content;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.login-button {
+  width: 100%;
+  height: 48px;
+  margin-top: 10px;
+  border-radius: 12px;
+  background: #d40511;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  transition: 0.2s ease;
+}
+
+.login-button:hover {
+  background: #b90410;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(212, 5, 17, 0.24);
+}
+
+.secondary-btn {
+  background: #6b7280;
+}
+
+.secondary-btn:hover {
+  background: #4b5563;
+}
+
+.logout-btn,
+.delete-btn {
+  background: #dc2626;
+}
+
+.logout-btn:hover,
+.delete-btn:hover {
+  background: #b91c1c;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+/* ================================
+   Tabs
+================================ */
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: white;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
+.tab-btn.active {
+  background: #2563eb;
+  color: white;
+}
+
+/* ================================
+   Messages
+================================ */
+
+.message {
+  margin-top: 14px;
+  text-align: center;
+  color: green;
+  font-weight: bold;
+}
+
+.message.error {
+  color: #dc2626;
+}
+
+.auth-shell > .message {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  background: #ffffff;
+  padding: 10px 18px;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.14);
+}
+
+/* ================================
+   Demo Account Box
+================================ */
+
+.demo-box {
+  margin-top: 24px;
+  padding: 16px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+}
+
+.demo-title {
+  margin-bottom: 8px !important;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.demo-box p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #334155;
+}
+
+/* ================================
+   Section Header
+================================ */
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.empty {
+  padding: 18px 0;
+}
+
+/* ================================
+   Knowledge Base Record
+================================ */
+
+.record {
+  border-top: 1px solid #e5e7eb;
+  padding: 18px 0;
+}
+
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.record h3 {
+  margin-bottom: 6px;
+}
+
+.meta {
+  font-size: 14px;
+}
+
+.record-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ================================
+   Status Badge
+================================ */
+
+.status {
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status.draft {
+  background: #f59e0b;
+}
+
+.status.reviewed {
+  background: #2563eb;
+}
+
+.status.published {
+  background: #16a34a;
+}
+
+/* ================================
+   Details / Content Preview
+================================ */
+
+details {
+  margin-top: 12px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+pre {
+  background: #f9fafb;
+  padding: 14px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+small {
+  color: #6b7280;
+  display: block;
+  margin-top: 6px;
+}
+
+/* ================================
+   Responsive Design
+================================ */
+
+@media (max-width: 900px) {
+  .login-layout {
+    grid-template-columns: 1fr;
+    max-width: 540px;
+  }
+
+  .login-info-panel {
+    padding: 34px;
+  }
+
+  .login-info-panel h1 {
+    font-size: 28px;
+  }
+
+  .login-card {
+    padding: 34px;
+  }
+
+  .topbar,
+  .record-header,
+  .section-header {
+    flex-direction: column;
+  }
+
+  .form-grid,
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page {
+    padding: 18px;
+  }
+
+  .auth-shell {
+    padding: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .login-page {
+    padding: 20px 14px;
+  }
+
+  .login-info-panel,
+  .login-card {
+    padding: 26px 22px;
+  }
+
+  .login-card-header h2 {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .page {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
+}

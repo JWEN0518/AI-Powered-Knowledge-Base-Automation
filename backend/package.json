@@ -2,8 +2,10 @@
   "name": "assignment-web-application-with-rpa-dhl-dac-3-0-jwen0518",
   "version": "1.0.0",
   "description": "[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/AdXPQXWO)",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,10 +20,18 @@
   },
   "homepage": "https://github.com/UTM-FC/assignment-web-application-with-rpa-dhl-dac-3-0-JWEN0518#readme",
   "dependencies": {
+    "axios": "^1.16.0",
+    "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mongoose": "^9.5.0",
-    "multer": "^2.1.1"
+    "jsonwebtoken": "^9.0.3",
+    "mammoth": "^1.12.0",
+    "mongoose": "^9.6.1",
+    "multer": "^2.1.1",
+    "pdf-parse": "^2.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
