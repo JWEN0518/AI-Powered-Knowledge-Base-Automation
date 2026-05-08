@@ -1,5 +1,10 @@
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 const KnowledgeBase = require("../models/KnowledgeBase");
 const extractTextFromFile = require("../utils/fileExtractor");
+
+const uploadsDir = path.join(__dirname, "..", "uploads");
 
 function parseTags(tags) {
   if (!tags) return [];
@@ -22,6 +27,38 @@ function toUserInfo(user) {
   };
 }
 
+function sanitizeFileName(fileName) {
+  const extension = path.extname(fileName);
+  const baseName = path
+    .basename(fileName, extension)
+    .replace(/[^a-zA-Z0-9-_]/g, "-")
+    .replace(/-+/g, "-")
+    .slice(0, 80);
+
+  return `${baseName || "upload"}${extension.toLowerCase()}`;
+}
+
+function saveUploadedFile(file) {
+  if (!file) return null;
+
+  fs.mkdirSync(uploadsDir, { recursive: true });
+
+  const safeOriginalName = sanitizeFileName(file.originalname);
+  const uniquePrefix = `${Date.now()}-${crypto.randomBytes(6).toString("hex")}`;
+  const storedName = `${uniquePrefix}-${safeOriginalName}`;
+  const storedPath = path.join(uploadsDir, storedName);
+
+  fs.writeFileSync(storedPath, file.buffer);
+
+  return {
+    originalName: file.originalname,
+    storedName,
+    url: `/uploads/${storedName}`,
+    mimeType: file.mimetype,
+    size: file.size
+  };
+}
+
 function addVersion(record, updatedBy) {
   record.versions.push({
     versionNo: record.versions.length + 1,
@@ -30,6 +67,7 @@ function addVersion(record, updatedBy) {
     category: record.category,
     tags: record.tags,
     sourceFile: record.sourceFile,
+    uploadedFile: record.uploadedFile,
     status: record.status,
     updatedBy
   });
@@ -45,6 +83,7 @@ async function listRecords(req, res) {
         { title: { $regex: search, $options: "i" } },
         { content: { $regex: search, $options: "i" } },
         { sourceFile: { $regex: search, $options: "i" } },
+        { "uploadedFile.originalName": { $regex: search, $options: "i" } },
         { tags: { $regex: search, $options: "i" } }
       ];
     }
@@ -80,28 +119,34 @@ async function createRecord(req, res) {
     let finalContent = content || "";
     let finalSourceFile = sourceFile || "";
     let sourceType = "text";
+    let uploadedFile = null;
 
     if (req.file) {
       const extracted = await extractTextFromFile(req.file);
-      finalContent = extracted.text || finalContent;
+      uploadedFile = saveUploadedFile(req.file);
+      finalContent = extracted.text || finalContent || `Uploaded file saved: ${req.file.originalname}`;
       finalSourceFile = req.file.originalname;
       sourceType = extracted.sourceType;
     }
 
     if (!title || !finalContent) {
       return res.status(400).json({
-        message: "Title and content are required."
+        message: "Title and content are required. Upload a supported file or enter content manually."
       });
     }
 
     const creator = toUserInfo(req.user);
+    const parsedTags = parseTags(tags);
+    const recordCategory = category || "Auto Imported";
+
     const newRecord = await KnowledgeBase.create({
       title,
       content: finalContent,
-      category: category || "Auto Imported",
-      tags: parseTags(tags),
+      category: recordCategory,
+      tags: parsedTags,
       sourceFile: finalSourceFile,
       sourceType,
+      uploadedFile,
       status: "Draft",
       creator,
       statusHistory: [
@@ -116,9 +161,10 @@ async function createRecord(req, res) {
           versionNo: 1,
           title,
           content: finalContent,
-          category: category || "Auto Imported",
-          tags: parseTags(tags),
+          category: recordCategory,
+          tags: parsedTags,
           sourceFile: finalSourceFile,
+          uploadedFile,
           status: "Draft",
           updatedBy: creator
         }
@@ -156,7 +202,8 @@ async function updateRecord(req, res) {
 
     if (req.file) {
       const extracted = await extractTextFromFile(req.file);
-      record.content = extracted.text || record.content;
+      record.uploadedFile = saveUploadedFile(req.file);
+      record.content = extracted.text || record.content || `Uploaded file saved: ${req.file.originalname}`;
       record.sourceFile = req.file.originalname;
       record.sourceType = extracted.sourceType;
     }

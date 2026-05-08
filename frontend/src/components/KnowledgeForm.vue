@@ -67,7 +67,12 @@
       </div>
 
       <label>Upload File</label>
-      <input id="fileUpload" type="file" accept=".txt,.pdf,.docx" @change="handleFileChange" />
+      <input
+        id="fileUpload"
+        type="file"
+        accept=".txt,.pdf,.docx,.jpg,.jpeg,.png,.msg"
+        @change="handleFileChange"
+      />
 
       <div class="button-row">
         <button

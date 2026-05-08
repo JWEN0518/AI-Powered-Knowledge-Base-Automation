@@ -9,6 +9,17 @@ const userInfoSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const uploadedFileSchema = new mongoose.Schema(
+  {
+    originalName: String,
+    storedName: String,
+    url: String,
+    mimeType: String,
+    size: Number
+  },
+  { _id: false }
+);
+
 const statusHistorySchema = new mongoose.Schema(
   {
     status: {
@@ -37,6 +48,7 @@ const versionSchema = new mongoose.Schema(
     category: String,
     tags: [String],
     sourceFile: String,
+    uploadedFile: uploadedFileSchema,
     status: String,
     updatedBy: userInfoSchema,
     updatedAt: {
@@ -72,8 +84,12 @@ const knowledgeBaseSchema = new mongoose.Schema(
     },
     sourceType: {
       type: String,
-      enum: ["text", "txt", "pdf", "docx", "unknown"],
+      enum: ["text", "txt", "pdf", "docx", "image", "msg", "unknown"],
       default: "text"
+    },
+    uploadedFile: {
+      type: uploadedFileSchema,
+      default: null
     },
     status: {
       type: String,

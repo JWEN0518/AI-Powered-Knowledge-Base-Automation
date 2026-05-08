@@ -18,8 +18,14 @@
       <option value="Published">Published</option>
     </select>
 
-    <input v-model="localFilters.dateFrom" type="date" />
-    <input v-model="localFilters.dateTo" type="date" />
+    <div class="date-filter">
+      <label for="dateFrom" class="sr-only">Start Date</label>
+      <input v-model="localFilters.dateFrom" id="dateFrom" type="date" title="Start Date (From)" />
+    </div>
+    <div class="date-filter">
+      <label for="dateTo" class="sr-only">End Date</label>
+      <input v-model="localFilters.dateTo" id="dateTo" type="date" title="End Date (To)" />
+    </div>
 
     <button id="applyFilterBtn" data-testid="kb-apply-filter" @click="applyFilters">
       Apply Filters

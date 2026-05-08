@@ -614,3 +614,24 @@ small {
     padding-right: 64px;
   }
 }
+.uploaded-file-row a {
+  color: #0057b8;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.uploaded-file-row a:hover {
+  text-decoration: underline;
+}
+
+.file-preview {
+  margin: 10px 0 12px;
+}
+
+.file-preview img {
+  max-width: 260px;
+  max-height: 180px;
+  border-radius: 12px;
+  border: 1px solid #dbeafe;
+  object-fit: cover;
+}

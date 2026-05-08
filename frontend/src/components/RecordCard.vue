@@ -15,6 +15,20 @@
           | Tags: {{ tagText }}
         </p>
 
+        <p v-if="hasUploadedFile" class="meta uploaded-file-row">
+          Uploaded File:
+          <a :href="uploadedFileUrl" target="_blank" rel="noopener noreferrer">
+            {{ record.uploadedFile.originalName }}
+          </a>
+          <span v-if="record.uploadedFile.size">
+            ({{ formatFileSize(record.uploadedFile.size) }})
+          </span>
+        </p>
+
+        <div v-if="isImageFile" class="file-preview">
+          <img :src="uploadedFileUrl" :alt="record.uploadedFile.originalName" />
+        </div>
+
         <p class="meta">
           Creator: {{ record.creator?.name || "Unknown" }}
           ({{ record.creator?.email || "N/A" }})
@@ -74,6 +88,9 @@
         <li v-for="version in record.versions" :key="version.versionNo">
           Version {{ version.versionNo }}: {{ version.status }} updated by
           {{ version.updatedBy?.name || "Unknown" }} on {{ formatDate(version.updatedAt) }}
+          <span v-if="version.uploadedFile?.originalName">
+            | File: {{ version.uploadedFile.originalName }}
+          </span>
         </li>
       </ul>
     </details>
@@ -82,6 +99,8 @@
 
 <script>
 import StatusBadge from "./StatusBadge.vue";
+
+const API_ORIGIN = "http://localhost:5000";
 
 export default {
   components: {
@@ -109,12 +128,29 @@ export default {
   computed: {
     tagText() {
       return this.record.tags?.length ? this.record.tags.join(", ") : "None";
+    },
+    hasUploadedFile() {
+      return Boolean(this.record.uploadedFile?.url);
+    },
+    uploadedFileUrl() {
+      const url = this.record.uploadedFile?.url || "";
+      if (!url) return "";
+      return url.startsWith("http") ? url : `${API_ORIGIN}${url}`;
+    },
+    isImageFile() {
+      return Boolean(this.record.uploadedFile?.mimeType?.startsWith("image/"));
     }
   },
   methods: {
     formatDate(value) {
       if (!value) return "N/A";
       return new Date(value).toLocaleString();
+    },
+    formatFileSize(size) {
+      if (!size) return "0 B";
+      if (size < 1024) return `${size} B`;
+      if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+      return `${(size / (1024 * 1024)).toFixed(1)} MB`;
     }
   }
 };
