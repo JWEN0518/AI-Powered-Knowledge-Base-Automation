@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/UTM-FC/assignment-web-application-with-rpa-dhl-dac-3-0-JWEN0518#readme",
   "dependencies": {
+    "@google/genai": "^2.2.0",
     "axios": "^1.16.0",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
