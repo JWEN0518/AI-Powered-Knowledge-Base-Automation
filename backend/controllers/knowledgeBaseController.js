@@ -3,6 +3,7 @@ const path = require("path");
 const crypto = require("crypto");
 const KnowledgeBase = require("../models/KnowledgeBase");
 const extractTextFromFile = require("../utils/fileExtractor");
+const buildAiDraft = require("../utils/aiDraftBuilder");
 
 const uploadsDir = path.join(__dirname, "..", "uploads");
 
@@ -139,11 +140,58 @@ async function createRecord(req, res) {
     const parsedTags = parseTags(tags);
     const recordCategory = category || "Auto Imported";
 
+    let aiGenerated = false;
+    let aiSummary = "";
+    let aiSteps = [];
+    let aiQualityNotes = "";
+    let aiConflictWarning = "";
+    let aiOutdatedWarning = "";
+
+    let finalTitle = title;
+    let finalCategory = recordCategory;
+    let finalTags = parsedTags;
+    let originalContent = finalContent;
+
+    try {
+      const existingRecords = await KnowledgeBase.find({
+        status: "Published"
+      })
+        .sort({ updatedAt: -1 })
+        .limit(10);
+
+      const aiDraft = await buildAiDraft({
+        rawText: finalContent,
+        sourceFile: finalSourceFile,
+        existingRecords
+      });
+
+      aiGenerated = true;
+      finalTitle = aiDraft.title || title;
+      finalContent = aiDraft.polishedContent || finalContent;
+      finalCategory = aiDraft.category || recordCategory;
+      finalTags = Array.isArray(aiDraft.tags) && aiDraft.tags.length > 0 ? aiDraft.tags : parsedTags;
+
+      aiSummary = aiDraft.summary || "";
+      aiSteps = Array.isArray(aiDraft.steps) ? aiDraft.steps : [];
+      aiQualityNotes = aiDraft.qualityNotes || "";
+      aiConflictWarning = aiDraft.conflictWarning || "";
+      aiOutdatedWarning = aiDraft.outdatedWarning || "";
+    } catch (aiError) {
+      console.log("AI generation skipped or failed:", aiError.message);
+    }
+
     const newRecord = await KnowledgeBase.create({
-      title,
+      title: finalTitle,
       content: finalContent,
-      category: recordCategory,
-      tags: parsedTags,
+      originalContent,
+      aiGenerated,
+      aiSummary,
+      aiSteps,
+      aiQualityNotes,
+      aiConflictWarning,
+      aiOutdatedWarning,
+      category: finalCategory,
+      tags: finalTags,
       sourceFile: finalSourceFile,
       sourceType,
       uploadedFile,
@@ -159,10 +207,10 @@ async function createRecord(req, res) {
       versions: [
         {
           versionNo: 1,
-          title,
+          title: finalTitle,
           content: finalContent,
-          category: recordCategory,
-          tags: parsedTags,
+          category: finalCategory,
+          tags: finalTags,
           sourceFile: finalSourceFile,
           uploadedFile,
           status: "Draft",

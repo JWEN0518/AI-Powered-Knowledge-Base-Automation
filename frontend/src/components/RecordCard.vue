@@ -4,6 +4,10 @@
       <div>
         <h3>{{ record.title }}</h3>
 
+        <p v-if="record.aiGenerated" class="ai-label">
+          AI-enhanced draft
+        </p>
+
         <p class="meta source-file-marker" :id="'source-' + record._id">
           SourceFile: {{ record.sourceFile || "Manual input" }}
         </p>
@@ -155,3 +159,17 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.ai-label {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #ede9fe;
+  color: #5b21b6;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+</style>

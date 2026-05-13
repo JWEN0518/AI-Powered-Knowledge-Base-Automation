@@ -70,6 +70,34 @@ const knowledgeBaseSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    originalContent: {
+      type: String,
+      default: ""
+    },
+    aiGenerated: {
+      type: Boolean,
+      default: false
+    },
+    aiSummary: {
+      type: String,
+      default: ""
+    },
+    aiSteps: {
+      type: [String],
+      default: []
+    },
+    aiQualityNotes: {
+      type: String,
+      default: ""
+    },
+    aiConflictWarning: {
+      type: String,
+      default: ""
+    },
+    aiOutdatedWarning: {
+      type: String,
+      default: ""
+    },
     category: {
       type: String,
       default: "Auto Imported"
